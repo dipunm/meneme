@@ -1,5 +1,6 @@
 [versions]
-agp = "8.9.2"
+agp = "8.10.1"
+quartzVersion = "v0.84.3"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -8,8 +9,11 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.04.01"
+navComposeVersion = "2.9.0"
 
 [libraries]
+amethyst-quartz = { module = "com.github.vitorpamplona.amethyst:quartz", version.ref = "quartzVersion" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navComposeVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

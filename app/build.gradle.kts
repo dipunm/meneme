@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "app.nostr.meneme"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -37,9 +37,24 @@ android {
     buildFeatures {
         compose = true
     }
+//
+//    packaging {
+//        jniLibs.pickFirsts.add("lib/arm64-v8a/libjnidispatch.so")
+//        jniLibs.pickFirsts.add("lib/arm64-v8a/libsodium.so")
+//        jniLibs.pickFirsts.add("lib/armeabi-v7a/libjnidispatch.so")
+//        jniLibs.pickFirsts.add("lib/armeabi-v7a/libsodium.so")
+//        jniLibs.pickFirsts.add("lib/x86/libjnidispatch.so")
+//        jniLibs.pickFirsts.add("lib/x86/libsodium.so")
+//        jniLibs.pickFirsts.add("lib/x86_64/libjnidispatch.so")
+//        jniLibs.pickFirsts.add("lib/x86_64/libsodium.so")
+//    }
 }
 
 dependencies {
+    implementation("com.goterl:lazysodium-android:5.2.0@arr")
+    implementation("net.java.dev.jna:jna:5.17.0@arr")
+    implementation(libs.amethyst.quartz)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
