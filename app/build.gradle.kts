@@ -51,9 +51,13 @@ android {
 }
 
 dependencies {
-    implementation("com.goterl:lazysodium-android:5.2.0@arr")
-    implementation("net.java.dev.jna:jna:5.17.0@arr")
-    implementation(libs.amethyst.quartz)
+    implementation(libs.amethyst.quartz) {
+        exclude("net.java.dev.jna")
+    }
+    implementation("net.java.dev.jna:jna:5.17.0") {
+        artifact { type = "aar" }
+    }
+
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
