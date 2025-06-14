@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "app.nostr.meneme";
+option java_outer_classname = "PrivateKeyProto";
+
+message PrivateKey {
+  bytes key = 1;
+}

@@ -1,4 +1,4 @@
-package app.nostr.meneme.welcome
+package app.nostr.meneme.onboarding
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
@@ -86,7 +86,9 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onNewProfile: () -> Unit) {
 
             // Primary action — FilledButton, 56dp height, 16dp radius
             Button(
-                onClick = onNewProfile,
+                onClick = {
+                    onNewProfile()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),

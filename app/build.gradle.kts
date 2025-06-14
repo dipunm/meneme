@@ -1,8 +1,12 @@
+import com.google.protobuf.gradle.*
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.protobuf)
 }
+
 
 android {
     namespace = "app.nostr.meneme"
@@ -37,29 +41,50 @@ android {
     buildFeatures {
         compose = true
     }
-//
-//    packaging {
-//        jniLibs.pickFirsts.add("lib/arm64-v8a/libjnidispatch.so")
-//        jniLibs.pickFirsts.add("lib/arm64-v8a/libsodium.so")
-//        jniLibs.pickFirsts.add("lib/armeabi-v7a/libjnidispatch.so")
-//        jniLibs.pickFirsts.add("lib/armeabi-v7a/libsodium.so")
-//        jniLibs.pickFirsts.add("lib/x86/libjnidispatch.so")
-//        jniLibs.pickFirsts.add("lib/x86/libsodium.so")
-//        jniLibs.pickFirsts.add("lib/x86_64/libjnidispatch.so")
-//        jniLibs.pickFirsts.add("lib/x86_64/libsodium.so")
-//    }
+}
+
+protobuf {
+    // Point to the protoc compiler version from your version catalog
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+    // Configure all generateProto tasks to emit Java code
+    generateProtoTasks {
+        all().forEach {
+            it.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
+    // Quartz library provides helpful Nostr functionality.
     implementation(libs.amethyst.quartz) {
+        // Exclude transitive JNA dependency to avoid pulling the JAR-only version without native libs.
         exclude("net.java.dev.jna")
     }
+    // Add JNA explicitly as an AAR dependency to ensure native libraries for all Android architectures are included.
     implementation("net.java.dev.jna:jna:5.17.0") {
+        // Use AAR artifact to get native .so libraries bundled with JNA.
         artifact { type = "aar" }
     }
 
+    // Jetpack DataStore (Preferences)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.javalite)
+
+    // Used to encrypt data with Android KeyStore
+    implementation(libs.androidx.security.crypto.ktx)
+
+    // Navigation library for routing between screens.
     implementation(libs.androidx.navigation.compose)
 
+    // Default dependencies installed by default.
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
